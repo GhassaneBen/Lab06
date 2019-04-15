@@ -40,13 +40,53 @@ public class MeteoDAO {
 	}
 
 	public List<Rilevamento> getAllRilevamentiLocalitaMese(int mese, String localita) {
+		
+		List<Rilevamento>rilevamentoML=new ArrayList<Rilevamento>();
+		
+		for(Rilevamento r:this.getAllRilevamenti()) {
+			
+           int Mese=r.getData().getMonth();
+           
+           if(mese==Mese && localita==r.getLocalita()) {
+        	   rilevamentoML.add(r);
+        	   
+           }
+			
+			
+		}
+		
+		
 
-		return null;
+		return rilevamentoML;
 	}
 
 	public Double getAvgRilevamentiLocalitaMese(int mese, String localita) {
+		
+		List<Rilevamento> rilevamentoML2=this.getAllRilevamentiLocalitaMese(mese, localita);
+		
+		double sum=0.0;
+		
+		for(Rilevamento r:rilevamentoML2) {
+			
+			sum+=(double)r.getUmidita();
+			
+		}
+		
 
-		return 0.0;
+		return sum/((double)rilevamentoML2.size());
+	}
+	
+	public List<String> getAllLocalita(){
+		
+		List<String>allLocalita=new ArrayList<String>();
+		for(Rilevamento r:this.getAllRilevamenti()) {
+			
+			allLocalita.add(r.getLocalita());
+			
+			
+		}
+		return allLocalita;
+		
 	}
 
 }
